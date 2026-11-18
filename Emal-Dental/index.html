@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Стоматология «Эмаль» — демо-лендинг</title>
+<meta name="description" content="Демо-лендинг стоматологии: цены, первый визит, врачи, запись на осмотр.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F4F8F7;--surface:#FFFFFF;--ink:#0F3D44;--muted:#566F74;--line:#D2E0DE;--btn:#0F3D44;--btn-ink:#FFFFFF;--hdr:rgba(244,248,247,.92);--focus:#0B7F6C;--ok-bg:#E3F4EE;--ok-ink:#0F5A4A;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1C1F;--surface:#112A2E;--ink:#E4F0EE;--muted:#93ADB0;--line:#244348;--btn:#BFE6DB;--btn-ink:#0B1C1F;--hdr:rgba(11,28,31,.92);--focus:#7FD6C2;--ok-bg:#12332C;--ok-ink:#A9E5D3;color-scheme:dark}}
+  :root[data-theme="dark"]{--bg:#0B1C1F;--surface:#112A2E;--ink:#E4F0EE;--muted:#93ADB0;--line:#244348;--btn:#BFE6DB;--btn-ink:#0B1C1F;--hdr:rgba(11,28,31,.92);--focus:#7FD6C2;--ok-bg:#12332C;--ok-ink:#A9E5D3;color-scheme:dark}
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 72px)}
+  body{font-family:"Onest",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+  body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--hdr);backdrop-filter:blur(8px)}
+  a{color:inherit;text-decoration:none}
+  ul,ol{list-style:none}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+  .container{max-width:1040px;margin:0 auto;padding:0 20px}
+
+  header{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--hdr);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px}
+  .logo{font-weight:800;font-size:1.35rem;letter-spacing:-.02em}
+  .logo small{font-weight:500;font-size:.85rem;color:var(--muted);margin-left:8px;letter-spacing:0}
+  .nav ul{display:flex;gap:26px}
+  .nav ul a{color:var(--muted);font-size:.95rem;transition:color .2s}
+  .nav ul a:hover{color:var(--ink)}
+
+  .btn{display:inline-block;background:var(--btn);color:var(--btn-ink);font:inherit;font-weight:700;padding:14px 26px;border-radius:12px;border:0;cursor:pointer;transition:transform .15s,opacity .2s;white-space:nowrap}
+  .btn:hover{opacity:.9}
+  .btn:active{transform:scale(.98)}
+  .btn-line{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+
+  section{padding:76px 0;border-top:1px solid var(--line)}
+  .hero{padding:80px 0 64px;border-top:0}
+  h1{font-size:clamp(2.3rem,6vw,4.2rem);line-height:1.05;letter-spacing:-.03em;font-weight:800;max-width:15ch}
+  h2{font-size:clamp(1.6rem,3.6vw,2.1rem);line-height:1.15;letter-spacing:-.02em;margin-bottom:12px}
+  .lead{color:var(--muted);font-size:1.12rem;max-width:48ch;margin:22px 0 30px}
+  .actions{display:flex;gap:12px;flex-wrap:wrap}
+  .sub{color:var(--muted);max-width:34ch}
+
+  /* Подбор оттенка */
+  .shades{margin-top:56px}
+  .shades p.hint{color:var(--muted);font-size:.95rem;margin-bottom:10px}
+  .shade-row{display:flex;gap:6px;flex-wrap:wrap}
+  .shade{background:none;border:0;cursor:pointer;color:var(--ink);font:inherit;display:grid;justify-items:center;gap:4px;padding:8px 10px;border-radius:14px;animation:rise .6s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i)*70ms);transition:transform .2s}
+  .shade:hover{transform:translateY(-3px)}
+  .shade svg{width:58px;height:72px}
+  .shade path{fill:var(--c);stroke:var(--line);stroke-width:2;stroke-linejoin:round}
+  .shade b{font-size:.88rem}
+  .shade[aria-pressed="true"]{box-shadow:inset 0 0 0 2px var(--ink)}
+  @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+  #shadeNote{margin-top:14px;max-width:54ch;background:var(--surface);border-left:3px solid var(--ink);border-radius:0 10px 10px 0;padding:12px 16px;min-height:3.4em}
+
+  .split{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:48px;align-items:start}
+
+  /* Цены */
+  .prices li{display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .prices li:first-child{padding-top:0}
+  .prices h3{font-size:1.05rem}
+  .prices p{color:var(--muted);font-size:.9rem}
+  .prices strong{white-space:nowrap;font-size:1.1rem}
+  .note{color:var(--muted);font-size:.9rem;margin-top:16px}
+
+  /* Первый визит */
+  .steps{counter-reset:s}
+  .steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:16px;padding-bottom:26px}
+  .steps li::before{content:counter(s);width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--line)}
+  .steps h3{font-size:1.05rem;margin-bottom:2px}
+  .steps p{color:var(--muted)}
+
+  /* Врачи */
+  .docs li{display:flex;justify-content:space-between;gap:20px;padding:18px 0;border-bottom:1px solid var(--line)}
+  .docs li:first-child{padding-top:0}
+  .docs span{color:var(--muted);font-size:.92rem}
+  .docs .exp{white-space:nowrap}
+
+  /* Запись */
+  .contacts li{margin-bottom:14px;color:var(--muted)}
+  .contacts b{display:block;color:var(--ink)}
+  form{display:grid;gap:14px;max-width:460px}
+  label{font-size:.9rem;color:var(--muted);display:grid;gap:6px}
+  input,select{background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:12px 14px;font:inherit}
+  .form-msg{display:none;background:var(--ok-bg);color:var(--ok-ink);padding:12px 14px;border-radius:10px}
+  .form-msg.show{display:block}
+
+  footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:.85rem;text-align:center}
+
+  @media(max-width:760px){
+    .nav{height:64px}
+    .nav ul,.logo small{display:none}
+    .btn{padding:12px 20px}
+    .split{grid-template-columns:1fr;gap:28px}
+    section{padding:56px 0}
+    .hero{padding:48px 0 48px}
+    .shades{margin-top:40px}
+  }
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="tooth" viewBox="0 0 64 80"><path d="M32 8C26 8 22 4 15 4 7 4 3 11 3 21c0 9 4 17 5 27 1 10 2 28 9 28 6 0 7-18 9-26 1-4 3-6 6-6s5 2 6 6c2 8 3 26 9 26 7 0 8-18 9-28 1-10 5-18 5-27 0-10-4-17-12-17-7 0-11 4-17 4z"/></symbol>
+</svg>
+
+<header>
+  <div class="container nav">
+    <a href="#top" class="logo">Эмаль<small>стоматология</small></a>
+    <ul>
+      <li><a href="#prices">Цены</a></li>
+      <li><a href="#visit">Первый визит</a></li>
+      <li><a href="#doctors">Врачи</a></li>
+      <li><a href="#booking">Контакты</a></li>
+    </ul>
+    <a href="#booking" class="btn">Записаться на осмотр</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container">
+      <h1>Лечим аккуратно, объясняем заранее</h1>
+      <p class="lead">Стоматология в Одессе. Сначала диагностика и план лечения с ценами на бумаге, потом работа. Без неожиданных пунктов в чеке.</p>
+      <div class="actions">
+        <a href="#booking" class="btn">Записаться на осмотр</a>
+        <a href="#prices" class="btn btn-line">Посмотреть цены</a>
+      </div>
+
+      <div class="shades">
+        <p class="hint">Какой у вас оттенок эмали? Нажмите на зуб.</p>
+        <div class="shade-row" id="shadeRow">
+          <button class="shade" style="--c:#F8F3E7;--i:0" data-note="A1: светлый, холодный оттенок. Обычно хватает профессиональной чистки раз в полгода." aria-pressed="false"><svg><use href="#tooth"/></svg><b>A1</b></button>
+          <button class="shade" style="--c:#F2E9D4;--i:1" data-note="A2: самый частый оттенок. Чистка и полировка возвращают естественный блеск." aria-pressed="true"><svg><use href="#tooth"/></svg><b>A2</b></button>
+          <button class="shade" style="--c:#EADFC2;--i:2" data-note="A3: тёплый, чуть насыщенный. Подойдёт мягкое отбеливание после чистки." aria-pressed="false"><svg><use href="#tooth"/></svg><b>A3</b></button>
+          <button class="shade" style="--c:#E3D5B0;--i:3" data-note="B2: жёлтый оттенок. Врач предложит отбеливание и подберёт уход, чтобы результат держался." aria-pressed="false"><svg><use href="#tooth"/></svg><b>B2</b></button>
+          <button class="shade" style="--c:#D6C69C;--i:4" data-note="C2: тёмный оттенок. Сначала осмотр: причина может быть в налёте, а может в самой эмали." aria-pressed="false"><svg><use href="#tooth"/></svg><b>C2</b></button>
+        </div>
+        <p id="shadeNote" role="status" aria-live="polite">A2: самый частый оттенок. Чистка и полировка возвращают естественный блеск.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="prices">
+    <div class="container split">
+      <div>
+        <h2>Цены</h2>
+        <p class="sub">Называем стоимость до начала лечения, а не после.</p>
+      </div>
+      <div>
+        <ul class="prices">
+          <li><div><h3>Осмотр и план лечения</h3><p>Снимок, консультация, смета</p></div><strong>300&nbsp;грн</strong></li>
+          <li><div><h3>Профессиональная чистка</h3><p>Ультразвук и Air Flow, 60 мин</p></div><strong>1&nbsp;800&nbsp;грн</strong></li>
+          <li><div><h3>Лечение кариеса</h3><p>Пломба с обезболиванием</p></div><strong>от 1&nbsp;500&nbsp;грн</strong></li>
+          <li><div><h3>Лечение каналов</h3><p>Под микроскопом, один визит</p></div><strong>от 3&nbsp;500&nbsp;грн</strong></li>
+          <li><div><h3>Отбеливание</h3><p>В кабинете, 90 мин</p></div><strong>5&nbsp;500&nbsp;грн</strong></li>
+          <li><div><h3>Керамическая коронка</h3><p>Включая примерку и фиксацию</p></div><strong>от 9&nbsp;000&nbsp;грн</strong></li>
+        </ul>
+        <p class="note">Цены ориентировочные. Точную сумму врач называет после осмотра.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="visit">
+    <div class="container split">
+      <div>
+        <h2>Как проходит первый визит</h2>
+        <p class="sub">Около часа, без спешки и без лишних назначений.</p>
+      </div>
+      <ol class="steps">
+        <li><div><h3>Осмотр и снимок</h3><p>Врач смотрит зубы и делает панорамный снимок.</p></div></li>
+        <li><div><h3>План и цены на бумаге</h3><p>Вы получаете список работ и стоимость каждой. Решаете сами, что делать.</p></div></li>
+        <li><div><h3>Лечение без боли</h3><p>Работаем с анестезией, предупреждаем о каждом этапе.</p></div></li>
+        <li><div><h3>Рекомендации по уходу</h3><p>Объясняем, как чистить зубы, чтобы вернуться только на осмотр.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="doctors">
+    <div class="container split">
+      <div>
+        <h2>Врачи</h2>
+        <p class="sub">Каждый занимается своим направлением.</p>
+      </div>
+      <ul class="docs">
+        <li><div><b>Анна Ковальчук</b><br><span>Терапевт: кариес, каналы, реставрация</span></div><span class="exp">12 лет</span></li>
+        <li><div><b>Игорь Бондарь</b><br><span>Хирург-имплантолог</span></div><span class="exp">15 лет</span></li>
+        <li><div><b>Мария Савченко</b><br><span>Гигиенист: чистка и отбеливание</span></div><span class="exp">8 лет</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="booking">
+    <div class="container split">
+      <div>
+        <h2>Запись на осмотр</h2>
+        <p class="sub" style="margin-bottom:24px">Оставьте имя и телефон, администратор перезвонит и подберёт время.</p>
+        <ul class="contacts">
+          <li><b>Адрес</b>ул. Примерная, 12, Одесса</li>
+          <li><b>Телефон</b>+380 00 000 00 00</li>
+          <li><b>График</b>Пн–Сб 9:00–20:00</li>
+        </ul>
+      </div>
+      <form id="bookingForm" novalidate>
+        <label>Имя
+          <input type="text" name="name" placeholder="Как к вам обращаться" autocomplete="given-name">
+        </label>
+        <label>Телефон
+          <input type="tel" name="phone" placeholder="+380 __ ___ __ __" autocomplete="tel">
+        </label>
+        <label>Что беспокоит
+          <select name="reason">
+            <option>Профилактический осмотр</option>
+            <option>Болит зуб</option>
+            <option>Чистка или отбеливание</option>
+            <option>Другое</option>
+          </select>
+        </label>
+        <button class="btn" type="submit">Записаться на осмотр</button>
+        <div class="form-msg" id="formMsg" role="status"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">© 2026 Эмаль. Демонстрационный проект: вымышленная клиника, данные условные.</div>
+</footer>
+
+<script>
+  // Подбор оттенка
+  var note = document.getElementById('shadeNote');
+  var shades = document.querySelectorAll('.shade');
+  shades.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      shades.forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
+      btn.setAttribute('aria-pressed', 'true');
+      note.textContent = btn.dataset.note;
+    });
+  });
+
+  // Демо-форма: данные никуда не отправляются
+  var form = document.getElementById('bookingForm');
+  var msg = document.getElementById('formMsg');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = form.name.value.trim();
+    var digits = form.phone.value.replace(/\D/g, '');
+    msg.classList.add('show');
+    if (name.length < 2) { msg.textContent = 'Введите имя.'; return; }
+    if (digits.length < 10) { msg.textContent = 'Введите номер телефона полностью.'; return; }
+    msg.textContent = 'Спасибо, ' + name + '! Заявка отправлена (демо). В реальном проекте администратор перезвонит вам.';
+    form.reset();
+  });
+</script>
+</body>
+</html>
