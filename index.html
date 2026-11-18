@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iron Fade — барбершоп (демо-лендинг)</title>
+<meta name="description" content="Демо-лендинг барбершопа: услуги, цены, запись онлайн.">
+<style>
+  :root{
+    --bg:#121212; --bg2:#1b1b1b; --text:#eee; --muted:#9a9a9a;
+    --accent:#d4a24c; --accent-dark:#b3862f; --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1080px;margin:0 auto;padding:0 20px}
+
+  /* Header */
+  header{position:sticky;top:0;z-index:10;background:rgba(18,18,18,.92);backdrop-filter:blur(8px);border-bottom:1px solid #262626}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .logo{font-weight:800;letter-spacing:2px;font-size:1.15rem}
+  .logo span{color:var(--accent)}
+  .nav ul{display:flex;gap:24px;list-style:none}
+  .nav ul a{color:var(--muted);font-size:.95rem;transition:color .2s}
+  .nav ul a:hover{color:var(--text)}
+  .btn{display:inline-block;background:var(--accent);color:#111;font-weight:700;padding:12px 24px;border-radius:999px;border:0;cursor:pointer;font-size:1rem;transition:background .2s,transform .2s}
+  .btn:hover{background:var(--accent-dark);transform:translateY(-1px)}
+  .btn-outline{background:transparent;color:var(--text);border:1px solid #444}
+  .btn-outline:hover{background:#222}
+
+  /* Hero */
+  .hero{padding:96px 0 80px;background:
+    radial-gradient(900px 400px at 80% 0%,rgba(212,162,76,.16),transparent 60%),var(--bg)}
+  .hero h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.1;max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p{color:var(--muted);max-width:46ch;margin:20px 0 32px;font-size:1.1rem}
+  .hero .actions{display:flex;gap:12px;flex-wrap:wrap}
+  .stats{display:flex;gap:40px;margin-top:56px;flex-wrap:wrap}
+  .stats b{display:block;font-size:1.8rem;color:var(--accent)}
+  .stats span{color:var(--muted);font-size:.9rem}
+
+  /* Sections */
+  section{padding:72px 0}
+  h2{font-size:clamp(1.6rem,4vw,2.2rem);margin-bottom:12px}
+  .sub{color:var(--muted);margin-bottom:40px}
+
+  /* Services */
+  .services{background:var(--bg2)}
+  .price-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+  .price{display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--bg);border:1px solid #2a2a2a;border-radius:var(--radius);padding:20px 22px}
+  .price h3{font-size:1.05rem}
+  .price p{color:var(--muted);font-size:.88rem}
+  .price strong{color:var(--accent);font-size:1.15rem;white-space:nowrap}
+
+  /* Why us */
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+  .feature{border:1px solid #2a2a2a;border-radius:var(--radius);padding:24px}
+  .feature .ico{font-size:1.6rem;margin-bottom:10px}
+  .feature p{color:var(--muted);font-size:.92rem}
+
+  /* Barbers */
+  .team{background:var(--bg2)}
+  .barbers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+  .barber{background:var(--bg);border:1px solid #2a2a2a;border-radius:var(--radius);padding:24px;text-align:center}
+  .avatar{width:84px;height:84px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;font-size:1.8rem;font-weight:800;color:#111;background:linear-gradient(135deg,var(--accent),#f0d08a)}
+  .barber p{color:var(--muted);font-size:.9rem}
+
+  /* Booking */
+  .booking-wrap{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+  form{display:grid;gap:14px}
+  label{font-size:.88rem;color:var(--muted);display:grid;gap:6px}
+  input,select{background:var(--bg2);border:1px solid #333;color:var(--text);border-radius:10px;padding:12px 14px;font-size:1rem;font-family:inherit}
+  input:focus,select:focus{outline:2px solid var(--accent);border-color:transparent}
+  .form-msg{display:none;background:#1f2a1c;border:1px solid #3c5a33;color:#b9e3a8;padding:12px 14px;border-radius:10px}
+  .form-msg.show{display:block}
+  .contacts li{list-style:none;margin-bottom:14px;color:var(--muted)}
+  .contacts b{display:block;color:var(--text)}
+
+  footer{border-top:1px solid #262626;padding:28px 0;color:var(--muted);font-size:.85rem;text-align:center}
+
+  /* ===== Правки шапки: больше места вокруг кнопки ===== */
+  .nav{height:84px;gap:20px;transition:height .3s ease}
+  header{transition:background .3s ease,box-shadow .3s ease}
+  header.scrolled{background:rgba(18,18,18,.97);box-shadow:0 6px 24px rgba(0,0,0,.45)}
+  header.scrolled .nav{height:68px}
+  .logo{flex-shrink:0}
+  .nav .btn{padding:15px 34px;white-space:nowrap;flex-shrink:0}
+  .nav ul a{position:relative;padding:6px 0}
+  .nav ul a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s ease}
+  .nav ul a:hover::after{transform:scaleX(1)}
+
+  /* ===== Анимации ===== */
+  .btn{position:relative;overflow:hidden}
+  .btn::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .6s ease}
+  .btn:hover::after{left:130%}
+  .btn:active{transform:translateY(0) scale(.97)}
+
+  .hero{position:relative;overflow:hidden}
+  .hero .container{position:relative;z-index:1}
+  .hero::before{content:"";position:absolute;width:520px;height:520px;right:-120px;top:-160px;border-radius:50%;background:radial-gradient(circle,rgba(212,162,76,.28),transparent 65%);animation:floatGlow 9s ease-in-out infinite}
+  @keyframes floatGlow{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,40px) scale(1.15)}}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+  .hero h1{animation:fadeUp .8s ease both}
+  .hero p{animation:fadeUp .8s ease .15s both}
+  .hero .actions{animation:fadeUp .8s ease .3s both}
+  .hero .stats{animation:fadeUp .8s ease .45s both}
+
+  @keyframes pulseGlow{0%,100%{box-shadow:0 0 0 0 rgba(212,162,76,.55)}60%{box-shadow:0 0 0 16px rgba(212,162,76,0)}}
+  .hero .actions .btn:first-child{animation:pulseGlow 2.4s ease-out infinite}
+
+  .reveal{opacity:0;transform:translateY(32px);transition:opacity .7s ease,transform .7s ease;transition-delay:var(--d,0s)}
+  .reveal.visible{opacity:1;transform:none}
+
+  .price,.feature,.barber{transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease}
+  .price:hover,.feature:hover,.barber:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 14px 32px rgba(0,0,0,.45)}
+  .feature .ico{display:inline-block;transition:transform .4s ease}
+  .feature:hover .ico{transform:scale(1.25) rotate(-8deg)}
+  .avatar{transition:transform .4s ease}
+  .barber:hover .avatar{transform:scale(1.08) rotate(6deg)}
+
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .reveal{opacity:1;transform:none}
+  }
+
+  @media(max-width:760px){
+    .nav{height:76px}
+    header.scrolled .nav{height:64px}
+    .nav .btn{padding:13px 26px}
+    .nav ul{display:none}
+    .booking-wrap{grid-template-columns:1fr}
+    .hero{padding:64px 0 56px}
+  }
+
+  /* ===== Hero: правая колонка ===== */
+  .hero .container{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero-visual{display:flex;align-items:center;justify-content:center;gap:28px;animation:fadeUp .9s ease .3s both}
+  .pole{position:relative;width:64px;height:300px;flex-shrink:0;border-radius:32px;border:4px solid #2a2a2a;overflow:hidden;box-shadow:0 0 0 2px rgba(212,162,76,.5),0 20px 50px rgba(0,0,0,.6);
+    background:repeating-linear-gradient(-45deg,var(--accent) 0 16px,#f2ead8 16px 32px,#2b2b2b 32px 48px);background-size:68px 68px;animation:spinPole 2.4s linear infinite}
+  .pole::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.45),transparent 35%,rgba(255,255,255,.18) 55%,rgba(0,0,0,.5))}
+  @keyframes spinPole{to{background-position:0 68px}}
+  .slots{background:var(--bg2);border:1px solid #2f2f2f;border-radius:var(--radius);padding:22px;width:230px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+  .slots h3{font-size:1.05rem;margin-bottom:4px}
+  .slots p{color:var(--muted);font-size:.85rem;margin:0 0 14px;max-width:none}
+  .slot-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .slot{display:block;text-align:center;padding:10px 0;border:1px solid #3a3a3a;border-radius:10px;font-weight:700;font-size:.95rem;transition:background .2s,color .2s,border-color .2s}
+  .slot:hover,.slot:focus-visible{background:var(--accent);color:#111;border-color:var(--accent)}
+  .slot.busy{color:#666;text-decoration:line-through;pointer-events:none;font-weight:500}
+  @media(max-width:860px){
+    .hero .container{grid-template-columns:1fr;gap:40px}
+    .hero-visual{justify-content:flex-start}
+    .pole{height:220px;width:52px}
+  }
+  @media(max-width:420px){.pole{display:none}.slots{width:100%}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a href="#top" class="logo">IRON<span>FADE</span></a>
+    <ul>
+      <li><a href="#services">Услуги</a></li>
+      <li><a href="#why">О нас</a></li>
+      <li><a href="#team">Мастера</a></li>
+      <li><a href="#booking">Контакты</a></li>
+    </ul>
+    <a href="#booking" class="btn">Записаться</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-text">
+      <h1>Стрижка, после которой <em>узнают</em> вас</h1>
+      <p>Мужской барбершоп в центре города. Опытные мастера, чистый стиль и никаких очередей: запись по времени.</p>
+      <div class="actions">
+        <a href="#booking" class="btn">Записаться онлайн</a>
+        <a href="#services" class="btn btn-outline">Смотреть цены</a>
+      </div>
+      <div class="stats">
+        <div><b>6 лет</b><span>на рынке</span></div>
+        <div><b>4 000+</b><span>клиентов</span></div>
+        <div><b>4.9</b><span>средняя оценка</span></div>
+      </div>
+      </div>
+      <aside class="hero-visual" aria-label="Свободное время на сегодня">
+        <div class="pole" aria-hidden="true"></div>
+        <div class="slots">
+          <h3>Сегодня свободно</h3>
+          <p>Нажмите на время, чтобы записаться</p>
+          <div class="slot-list">
+            <a class="slot busy" href="#booking" tabindex="-1">12:00</a>
+            <a class="slot" href="#booking">14:30</a>
+            <a class="slot" href="#booking">16:00</a>
+            <a class="slot busy" href="#booking" tabindex="-1">17:30</a>
+            <a class="slot" href="#booking">18:30</a>
+            <a class="slot" href="#booking">19:45</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="container">
+      <h2>Услуги и цены</h2>
+      <p class="sub">Цены ориентировочные, точная стоимость зависит от длины и сложности.</p>
+      <div class="price-list">
+        <div class="price"><div><h3>Мужская стрижка</h3><p>Машинка + ножницы, 60 мин</p></div><strong>500 грн</strong></div>
+        <div class="price"><div><h3>Стрижка бороды</h3><p>Форма, контур, уход, 40 мин</p></div><strong>350 грн</strong></div>
+        <div class="price"><div><h3>Стрижка + борода</h3><p>Полный образ, 90 мин</p></div><strong>750 грн</strong></div>
+        <div class="price"><div><h3>Королевское бритьё</h3><p>Горячее полотенце, опасная бритва</p></div><strong>400 грн</strong></div>
+        <div class="price"><div><h3>Детская стрижка</h3><p>До 12 лет, 40 мин</p></div><strong>350 грн</strong></div>
+        <div class="price"><div><h3>Укладка</h3><p>Стайлинг для вечера или встречи</p></div><strong>200 грн</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="container">
+      <h2>Почему к нам возвращаются</h2>
+      <p class="sub">Мелочи, из которых складывается хороший сервис.</p>
+      <div class="features">
+        <div class="feature"><div class="ico">✂️</div><h3>Опытные мастера</h3><p>Каждый барбер проходит обучение и практику перед работой с клиентами.</p></div>
+        <div class="feature"><div class="ico">🧼</div><h3>Стерильные инструменты</h3><p>Обрабатываем инструмент после каждого клиента.</p></div>
+        <div class="feature"><div class="ico">⏱️</div><h3>Без очередей</h3><p>Работаем строго по записи, вы не теряете время.</p></div>
+        <div class="feature"><div class="ico">☕</div><h3>Комфорт</h3><p>Кофе, чай и спокойная атмосфера, пока вы ждёте.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team" id="team">
+    <div class="container">
+      <h2>Наши мастера</h2>
+      <p class="sub">Выберите барбера при записи или доверьтесь администратору.</p>
+      <div class="barbers">
+        <div class="barber"><div class="avatar">А</div><h3>Андрей</h3><p>Классические стрижки, фейды</p></div>
+        <div class="barber"><div class="avatar">М</div><h3>Максим</h3><p>Борода и королевское бритьё</p></div>
+        <div class="barber"><div class="avatar">Д</div><h3>Денис</h3><p>Современные стрижки, укладка</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="booking">
+    <div class="container booking-wrap">
+      <div>
+        <h2>Запись онлайн</h2>
+        <p class="sub">Оставьте данные, и администратор перезвонит для подтверждения.</p>
+        <ul class="contacts">
+          <li><b>Адрес</b>ул. Примерная, 10, Одесса</li>
+          <li><b>Телефон</b>+380 00 000 00 00</li>
+          <li><b>График</b>Ежедневно 10:00 – 21:00</li>
+        </ul>
+      </div>
+      <form id="bookingForm" novalidate>
+        <label>Имя
+          <input type="text" name="name" placeholder="Как к вам обращаться" required>
+        </label>
+        <label>Телефон
+          <input type="tel" name="phone" placeholder="+380 __ ___ __ __" required>
+        </label>
+        <label>Услуга
+          <select name="service">
+            <option>Мужская стрижка</option>
+            <option>Стрижка бороды</option>
+            <option>Стрижка + борода</option>
+            <option>Королевское бритьё</option>
+            <option>Детская стрижка</option>
+          </select>
+        </label>
+        <label>Желаемая дата
+          <input type="date" name="date">
+        </label>
+        <button class="btn" type="submit">Отправить заявку</button>
+        <div class="form-msg" id="formMsg" role="status"></div>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">© 2026 Iron Fade. Демонстрационный проект: вымышленный бренд, данные условные.</div>
+</footer>
+
+<script>
+  // Демо-форма: данные никуда не отправляются.
+  // Для реального клиента здесь подключается отправка (Telegram-бот, email или CRM).
+  const form = document.getElementById('bookingForm');
+  const msg = document.getElementById('formMsg');
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const name = form.name.value.trim();
+    const phone = form.phone.value.trim();
+    const digits = phone.replace(/\D/g, '');
+
+    msg.classList.add('show');
+    if (name.length < 2) {
+      msg.textContent = 'Введите имя.';
+      return;
+    }
+    if (digits.length < 10) {
+      msg.textContent = 'Введите корректный номер телефона.';
+      return;
+    }
+    msg.textContent = 'Спасибо, ' + name + '! Заявка принята (демо). Администратор свяжется с вами.';
+    form.reset();
+  });
+
+  // ===== Анимации =====
+  // Шапка уменьшается при прокрутке
+  const header = document.querySelector('header');
+  function onScroll() { header.classList.toggle('scrolled', window.scrollY > 20); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Плавное появление блоков при прокрутке
+  const targets = document.querySelectorAll(
+    'section h2, section .sub, .price, .feature, .barber, .contacts, #bookingForm'
+  );
+  targets.forEach(function (el, i) {
+    el.classList.add('reveal');
+    el.style.setProperty('--d', ((i % 4) * 0.08) + 's');
+  });
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    targets.forEach(function (el) { io.observe(el); });
+  } else {
+    targets.forEach(function (el) { el.classList.add('visible'); });
+  }
+
+  // Счётчики в блоке статистики
+  function animateCounter(el) {
+    const m = el.textContent.trim().match(/^([\d\s.,]*\d)(.*)$/);
+    if (!m) return;
+    const raw = m[1].replace(/\s/g, '').replace(',', '.');
+    const end = parseFloat(raw);
+    if (isNaN(end)) return;
+    const decimals = (raw.split('.')[1] || '').length;
+    const suffix = m[2];
+    const duration = 1600;
+    const start = performance.now();
+    function fmt(v) {
+      return decimals ? v.toFixed(decimals) : Math.round(v).toLocaleString('ru-RU');
+    }
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = fmt(end * eased) + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    document.querySelectorAll('.stats b').forEach(animateCounter);
+  }
+</script>
+</body>
+</html>
